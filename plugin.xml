@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-wps" version="0.0.1" xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:rim="http://www.blackberry.com/ns/widgets">
+    <name>PoliceCheckPlugin</name>
+    <js-module name="WPSPlugin" src="www/WPSPlugin.js">
+        <clobbers target="cordova.plugins.WPSPlugin"/>
+    </js-module>
+    <platform name="android">
+        <edit-config file="AndroidManifest.xml" mode="merge"
+                     target="/manifest/application">
+            <activity android:usesCleartextTraffic="true"/>
+        </edit-config>
+        <config-file parent="/*" target="res/xml/config.xml">
+
+            <feature name="WPSPlugin">
+                <param name="android-package" value="com.skytech.wps.WPSPlugin"/>
+            </feature>
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="application">
+            <provider
+                    android:name="android.support.v4.content.FileProvider"
+                    android:authorities="${applicationId}.fileProvider"
+                    android:exported="false"
+                    android:grantUriPermissions="true">
+                <meta-data
+                        android:name="android.support.FILE_PROVIDER_PATHS"
+                        android:resource="@xml/file_paths"/>
+            </provider>
+        </config-file>
+        <config-file parent="/*" target="AndroidManifest.xml">
+            <uses-permission android:name="android.permission.INTERNET"/>
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+            <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+        </config-file>
+        <source-file src="src/android/java/WPSPlugin.java"
+                     target-dir="src/com/skytech/wps"/>
+        <source-file src="src/android/java/util/App.java"
+                     target-dir="src/com/skytech/wps/util"/>
+
+        <source-file src="src/android/java/util/Define.java"
+                     target-dir="src/com/skytech/wps/util"/>
+
+        <source-file src="src/android/java/util/WpsUtil.java"
+                     target-dir="src/com/skytech/wps/util"/>
+
+        <source-file src="src/android/java/util/JsonUtil.java"
+                     target-dir="src/com/skytech/wps/util"/>
+
+        <resource-file src="src/android/res/file_paths.xml" target="res/xml/file_paths.xml"/>
+
+        <framework src="src/android/build-extras.gradle" custom="true" type="gradleReference"/>
+        <framework src="com.android.support:support-v4:$ANDROID_SUPPORT_V4_VERSION"/>
+        <preference name="ANDROID_SUPPORT_V4_VERSION" default="27.+"/>
+    </platform>
+</plugin>
