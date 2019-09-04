@@ -1,4 +1,6 @@
 **************1.打开wps**************
+
+###cordova plugin add https://github.com/hahalinjiang/cordova-plugin-wpsedit
 `docPath 下载的文档地址
 fileName 文档名称
 params3 批注的名称`
